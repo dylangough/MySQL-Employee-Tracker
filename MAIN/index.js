@@ -48,6 +48,27 @@ function runSearch() {
         }
     });
 }
+function viewDepartments() {
+    var query = "SELECT name, id FROM employees.department ORDER BY id asc";
+    connection.query(query, function (err, res) {
+        console.table(res);
+        runSearch();
+    });
+}
+function viewEmployees() {
+    var query = "SELECT employee.first_name, employee.last_name, role.title FROM employee, role WHERE employee.id = role.id;";
+    connection.query(query, function (err, res) {
+        console.table(res);
+        runSearch();
+    });
+}
+function viewRoles() {
+    var query = "SELECT role.title, role.salary, department.name FROM role, department WHERE department.id = role.department_id;";
+    connection.query(query, function (err, res) {
+        console.table(res);
+        runSearch();
+    });
+}
 function addEmployee() {
     inquirer.prompt([
         {
