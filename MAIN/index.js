@@ -186,6 +186,7 @@ function updateEmployeeRole() {
             );
         });
 }
+
 function exit() {
     process.exit();
 }

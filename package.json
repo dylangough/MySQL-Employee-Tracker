@@ -4,19 +4,23 @@
   "description": "A solution for managing a company's employees using node, inquirer and MySQL.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dylangough/MySQL-Emplyee-Tracker.git"
   },
-  "author": "Dylan",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/dylangough/MySQL-Emplyee-Tracker/issues"
   },
   "homepage": "https://github.com/dylangough/MySQL-Emplyee-Tracker#readme",
-  "keywords": [
-    "start"
-  ]
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "express": "^4.17.1",
+    "inquirer": "^0.2.3",
+    "mysql": "^2.18.1"
+  }
 }
