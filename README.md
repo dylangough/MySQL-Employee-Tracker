@@ -20,8 +20,8 @@ JavaScript | Node.JS | Express | Inquirer
 
 * npm install jest
 * npm install inquirer
-*npm install express
-*npm install mysql
+* npm install express
+* npm install mysql
 
 
 <h3 align="right"><a href="https://github.com/dylangough/MySQL-Employee-Tracker">Github Link</a></h3>
