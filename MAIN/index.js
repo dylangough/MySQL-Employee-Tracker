@@ -72,9 +72,9 @@ function viewRoles() {
 function addEmployee() {
     inquirer.prompt([
         {
-        name: "firstName",
-        type: "input",
-        message: "What is the Employee's first name?",
+            name: "firstName",
+            type: "input",
+            message: "What is the Employee's first name?",
         },
         {
             name: "lastName",
@@ -92,16 +92,101 @@ function addEmployee() {
             message: "What is their manager ID?",
         },
     ])
-    .then(function (answer) {
-        var query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
-        connection.query(
-            query,
-            [answer.firstName, answer.lastName, answer.roleID, answer.managerID],
-            function (err, res) {
+        .then(function (answer) {
+            var query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
+            connection.query(
+                query,
+                [answer.firstName, answer.lastName, answer.roleID, answer.managerID],
+                function (err, res) {
+                    if (err) throw err;
+                    console.log('Successfully Added Employee to System: ${answer.firstName} ${answer.lastName}');
+                    runSearch();
+                }
+            );
+        });
+}
+function addDepartment() {
+    inquirer.prompt([
+        {
+            name: "departmentName",
+            type: "input",
+            message: "What department would you like to incorporate?",
+        },
+    ])
+        .then(function (answer) {
+            var query = "INSERT INTO department (name) VALUE (?)";
+            connection.query(query, answer.departmentName, function (err, res) {
                 if (err) throw err;
-                console.log('Successfully Added Employee to System: ${answer.firstName} ${answer.lastName}');
+                console.log(`n New Department Add: ${answer.departmentName} \n`);
+                runSearch();
+            });
+        });
+}
+function addRole() {
+    inquirer.prompt([
+        {
+            name: "departmentID",
+            type: "list",
+            message: "What department will this role be in? Select 1-Engineering, 2 Sales, 3-HR, 4-IT, 5-Legal",
+            choices: [1, 2, 3, 4, 5],
+        },
+        {
+            name: "title",
+            type: "input",
+            message: "What is the name of this new Role?",
+        },
+        {
+            name: "salary",
+            type: "input",
+            message: "Enter the salary for this role:",
+        },
+    ])
+        .then(function (answer) {
+            var query = "INSERT INTO role (title, salary, department_id) VALUES (?,?,?)";
+            connection.query(query, [answer.title, answer.salary, answer.departmentID], function (err, res) {
+                if (err) throw err;
+                console.log(`\n New Role Added: ${answer.title} \n`);
                 runSearch();
             }
-        )
-    })
+            );
+        });
 }
+function updateEmployeeRole() {
+    inquirer.prompt([
+        {
+            name: "currentEmployeeID",
+            type: "input",
+            message: "What is the ID of the employee you want to update?",
+        },
+        {
+            name: "newRoleTitle",
+            type: "input",
+            message: "What is the title of the role?",
+        },
+        {
+            name: "newRoleSalary",
+            type: "input",
+            message: "What is their salary?",
+        },
+        {
+            name: "newRoleDeptID",
+            type: "list",
+            message: "What department will they belong to? Select 1 for Sales, 2 for Engineering, 3 for Finance, and 4 for Legal",
+            choices: [1, 2, 3, 4],
+        }
+    ])
+        .then(function (answer) {
+            var query = "UPDATE role SET title = ?, salary = ?, department_id = ? WHERE id = ?";
+            connection.query(query, [answer.newRoleTitle, answer.newRoleSalary, answer.newRoleDeptID, parseInt(answer.currentEmployeeID)],
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(`\n Succeeded in Adding Role \n`);
+                    runSearch();
+                }
+            );
+        });
+}
+function exit() {
+    process.exit();
+}
+module.exports = runSearch;
